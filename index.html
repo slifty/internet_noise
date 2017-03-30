@@ -34,7 +34,8 @@
                 function lucky(words, name) {
                     var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(words.join(" "));
 
-                    if(name in popups) {
+                    if(name in popups
+                    && !popups[name].closed) {
                         popups[name].location = url;
                         console.log("Reusing tab");
                     } else {
@@ -45,7 +46,7 @@
                     setTimeout(function() {
                         if(!stop)
                             noisify(name);
-                    }, Math.floor(Math.random() * 12000) + 5000);
+                    }, Math.floor(Math.random() * 12000) + 12000);
                 }
 
                 function noisify(name) {
