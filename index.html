@@ -32,7 +32,7 @@
                 }
 
                 function lucky(words, name) {
-                    var url = "https://www.google.com/search?btnI&q=filetype:html+" + encodeURIComponent(words.join(" "));
+                    var url = "https://www.google.com/search?btnI&q=inurl:https+filetype:html+" + encodeURIComponent(words.join(" "));
 
                     if(name in popups
                     && !popups[name].closed) {
