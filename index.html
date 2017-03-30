@@ -37,7 +37,6 @@
                     if(name in popups
                     && !popups[name].closed) {
                         popups[name].location = url;
-                        console.log("Reusing tab");
                     } else {
                         popups[name] = window.open(url, name);
                     }
