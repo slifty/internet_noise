@@ -21,6 +21,7 @@
 
         <script>
             var stop = false;
+            var popups = {};
             // I wrote this in 5 minutes and am tired. maybe I'll clean it up later.
             $(function() {
 
@@ -32,7 +33,14 @@
 
                 function lucky(words, name) {
                     var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(words.join(" "));
-                    var popup = window.open(url, name);
+
+                    if(name in popups) {
+                        popups[name].location = url;
+                        console.log("Reusing tab");
+                    } else {
+                        popups[name] = window.open(url, name);
+                    }
+
                     self.focus();
                     setTimeout(function() {
                         if(!stop)
@@ -46,16 +54,6 @@
                     words.push(get_random_word());
                     words.push(get_random_word());
                     lucky(words, name);
-
-                    // $.get("http://www.setgetgo.com/randomword/get.php")
-                    // .done(function(d) {
-                    //  words.push(d);
-                    //  $.get("http://www.setgetgo.com/randomword/get.php")
-                    //  .done(function(d) {
-                    //      words.push(d);
-                            // lucky(words);
-                    //  })
-                    // })
                 }
 
                 $("#noise").click(function() {
