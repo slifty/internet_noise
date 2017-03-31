@@ -41,15 +41,16 @@
                 function lucky(words, name) {
                     var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(words.join(" "));
 
-                    if(name in popups) {
-                        if(!popups[name]) {
-                            if(!alertShown) {
-                                alertShown = true;
-                                alert('We would like to open more tabs but your browser is blocking our pop-ups.\n\nYou should see a tiny icon on the right side of your location bar. Click that icon to enable pop-ups from this site and reload the page to make more noise.\n\nThanks!');
-                            }
-                        } else if(!popups[name].closed) {
-                            popups[name].location = url;
+                    if(name in popups && !popups[name]) {
+                        if(!alertShown) {
+                            alertShown = true;
+                            alert('We would like to open more tabs but your browser is blocking our pop-ups.\n\nYou should see a tiny icon on the right side of your location bar. Click that icon to enable pop-ups from this site and reload the page to make more noise.\n\nThanks!');
                         }
+                        return;
+                    }
+
+                    if(popups[name] && !popups[name].closed) {
+                        popups[name].location = url;
                     } else {
                         popups[name] = window.open(url, name);
                     }
