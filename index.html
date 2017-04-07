@@ -37,8 +37,9 @@
                     return nouns[random_integer_between(0, nouns.length - 1)];
                 }
 
-                function lucky(words, name) {
-                    var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(words.join(" "));
+                function lucky(get_words, name) {
+                    var q = get_words().join(" ");
+                    var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(q);
 
                     if(name in popups
                     && !popups[name].closed) {
@@ -50,11 +51,11 @@
                     self.focus();
                     setTimeout(function() {
                         if(!stop)
-                            noisify(name);
+                            lucky(get_words, name);
                     }, Math.floor(Math.random() * 10000) + 8000);
                 }
 
-                function get_words(){
+                function get_initial_words(){
                     var words = [];
                     var n = random_integer_between(min_number_of_words, max_number_of_words);
                     for(var i=0;i<n;i++){
@@ -63,9 +64,31 @@
                     return words;
                 }
 
+                function get_word_getter(){
+                    var words = get_initial_words();
+                    var remove_word = function(index){
+                        var random_index = random_integer_between(0, words.length - 1);
+                        words.splice(random_index, 1);
+                    };
+                    var add_word = function(){
+                        words.push(get_random_word());
+                    };
+                    return function(){
+                        if(Math.random() > 0.8 && words.length < max_number_of_words){
+                            add_word();
+                        }else if(Math.random() > 0.8 && words.length > min_number_of_words){
+                            remove_word();
+                        }else{
+                            remove_word();
+                            add_word();
+                        }
+                        return words;
+                    };
+                }
+
                 function noisify(name) {
                     stop = false;
-                    lucky(get_words(), name);
+                    lucky(get_word_getter(), name);
                 }
 
                 $("#noise").click(function() {
