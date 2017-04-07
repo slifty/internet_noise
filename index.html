@@ -21,6 +21,8 @@
 
         <script>
             var default_nouns;
+            var min_number_of_words = 2;
+            var max_number_of_words = 4;
             var nouns;
             var popups = {};
             var qs;
@@ -48,12 +50,18 @@
                     }, Math.floor(Math.random() * 10000) + 8000);
                 }
 
+                function get_words(){
+                    var words = [];
+                    var n = random_integer_between(min_number_of_words, max_number_of_words);
+                    for(var i=0;i<n;i++){
+                        words.push(get_random_word());
+                    }
+                    return words;
+                }
+
                 function noisify(name) {
                     stop = false;
-                    var words = [];
-                    words.push(get_random_word());
-                    words.push(get_random_word());
-                    lucky(words, name);
+                    lucky(get_words(), name);
                 }
 
                 // events
@@ -90,7 +98,7 @@
                   }
 
                   function get_random_word() {
-                      return nouns[Math.floor(Math.random()*nouns.length)];
+                      return nouns[random_integer_between(0, nouns.length - 1)];
                   }
 
                   function parse_nouns() {
@@ -116,6 +124,10 @@
                               b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
                       }
                       return b;
+                  }
+
+                  function random_integer_between(a,b){
+                      return a + Math.floor((1 + b - a) * Math.random());
                   }
             })
 
@@ -165,7 +177,7 @@
 
             <br>
             <br>
-            
+
         </div>
     </body>
 </html>
