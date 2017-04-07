@@ -60,11 +60,11 @@
                 $("#noise").click(function() {
                     qs = parse_qs();
 
-                    noisify('noise_a');
-                    noisify('noise_b');
-                    //noisify('noise_c');
-                    //noisify('noise_d');
-                    //noisify('noise_e');
+                    var tabs = qs['tabs'] || 2;
+
+                    for(var i=0; i<tabs; i++) {
+                      noisify('noise_'+i);
+                    }
                 });
 
                 $("#stop").click(function() {
@@ -125,7 +125,8 @@
               <p>Query string:</p>
               <ul>
                 <li>To use DuckDuckGo: <a href="?engine=ddg">?engine=ddg</a></li>
-                <li>To use Google: <a href="?engine=g">?engine=g</a></li>
+                <li>To use Google (default): <a href="?engine=g">?engine=g</a></li>
+                <li>To set the number of tabs: <a href="?tabs=3">?tabs=3</a></li>
               </ul>
             </div>
             <br/>
