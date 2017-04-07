@@ -38,8 +38,7 @@
                 }
 
                 function lucky(get_words, name) {
-                    var q = get_words().join(" ");
-                    var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(q);
+                    var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(get_words().join(" "));
 
                     if(name in popups
                     && !popups[name].closed) {
