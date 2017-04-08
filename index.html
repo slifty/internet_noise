@@ -21,7 +21,6 @@
 
         <script>
             var stop = false;
-            var alertShown = false;
             var popups = {};
             var nouns;
             var min_number_of_words = 2;
@@ -42,10 +41,7 @@
                     var url = "https://www.google.com/search?btnI&q=" + encodeURIComponent(words.join(" "));
 
                     if(name in popups && !popups[name]) {
-                        if(!alertShown) {
-                            alertShown = true;
-                            alert('We would like to open more tabs but your browser is blocking our pop-ups.\n\nYou should see a tiny icon on the right side of your location bar. Click that icon to enable pop-ups from this site and reload the page to make more noise.\n\nThanks!');
-                        }
+                        // If browser is blocking our pop-ups, return.
                         return;
                     }
 
@@ -53,6 +49,9 @@
                         popups[name].location = url;
                     } else {
                         popups[name] = window.open(url, name);
+                        if (!popups[name]) {
+                            $("#popup-alert").css("display", "block");
+                        }
                     }
 
                     self.focus();
@@ -99,9 +98,20 @@
 
             <input type="button" value="Make some noise" id="noise"/>
             <input type="button" value="STOP THE NOISE!" id="stop"/>
+
             <br/>
             <br/>
             <p><i>This is an early stage and still evolving project. Please offer feedback <a href="https://twitter.com/slifty">via twitter</a> and if something goes wrong let me know.</i></p>
+
+            <div id="popup-alert" style="display: none">
+                <br/>
+                <hr/>
+                <br/>
+                <p><b>Your browser is blocking our pop-ups :(</b></p>
+                <img src="./popup-block.png" />
+                <p>We would like to open more tabs but your browser is blocking our pop-ups. You should see a tiny icon on the right side of your location bar. Click that icon to enable pop-ups from this site and reload the page to make more noise.</p>
+            </div>
+
             <br/>
             <hr/>
             <br/>
