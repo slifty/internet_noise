@@ -63,12 +63,10 @@
                 }
 
                 $("#noise").click(function() {
-
-                    noisify('noise_a');
-                    noisify('noise_b');
-                    //noisify('noise_c');
-                    //noisify('noise_d');
-                    //noisify('noise_e');
+					var number_of_popups = document.getElementById('popup_number').value;
+					for(var i=0;i<number_of_popups;i++){
+                    noisify('noise_' + i);
+					}
 
                 });
                 $("#stop").click(function() {
@@ -83,9 +81,9 @@
             <p>On March 28th, 2017 <a href="https://www.govtrack.us/congress/votes/115-2017/h202">congress passed a law</a> that makes it legal for your Internet Service Providers (ISP) to track and sell your personal activity online.  This means that things you search for, buy, read, and say can be collected by corporations and used against you.</p>
             <p>Click this button, and your browser will start passively loading random sites in browser tabs.  Leave it running to fill their databases with noise.  Just quit your browser when you're done.</p>
 
+			<input type="text" value="2" placeholder="Number of Popups" id="popup_number"/>
             <input type="button" value="Make some noise" id="noise"/>
             <input type="button" value="STOP THE NOISE!" id="stop"/>
-
             <br/>
             <br/>
             <p><i>This is an early stage and still evolving project. Please offer feedback <a href="https://twitter.com/slifty">via twitter</a> and if something goes wrong let me know.</i></p>
